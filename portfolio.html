@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karam — Community Manager & Brand Strategist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0A;
+    --surface: #111111;
+    --surface2: #1A1A1A;
+    --accent: #E8400C;
+    --accent2: #FF6B35;
+    --text: #F0EDE8;
+    --muted: #6B6B6B;
+    --border: #222222;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(232,64,12,0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.12s ease-out, width 0.25s, height 0.25s, border-color 0.25s;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 48px;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-number {
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: clamp(200px, 30vw, 420px);
+    color: rgba(232,64,12,0.04);
+    right: -40px; top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 48px 80px 48px;
+  }
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 32px; height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(72px, 9vw, 130px);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 32px;
+  }
+  h1 .outline {
+    -webkit-text-stroke: 1px var(--text);
+    color: transparent;
+  }
+  .hero-desc {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(240,237,232,0.65);
+    max-width: 420px;
+    margin-bottom: 40px;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 48px;
+  }
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .badge:hover { border-color: var(--accent); color: var(--accent); }
+  .cta-row { display: flex; gap: 16px; align-items: center; }
+  .btn-primary {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    background: var(--accent);
+    color: var(--text);
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.2s;
+    cursor: none;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+  .btn-ghost {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+    cursor: none;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-right {
+    display: flex; align-items: center; justify-content: center;
+    padding: 80px 48px;
+    position: relative;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    width: 100%;
+    max-width: 400px;
+  }
+  .stat-card {
+    background: var(--surface);
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .stat-card:hover { background: var(--surface2); }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .stat-card:hover::before { transform: scaleX(1); }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 3.2rem;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* SECTION BASE */
+  section { padding: 100px 48px; }
+  .section-header {
+    display: flex; align-items: baseline; gap: 20px;
+    margin-bottom: 64px;
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 64px);
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1;
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* EXPERIENCE */
+  .experience { background: var(--bg); }
+  .exp-list { display: flex; flex-direction: column; gap: 2px; }
+  .exp-item {
+    background: var(--surface);
+    display: grid;
+    grid-template-columns: 200px 1fr auto;
+    gap: 32px;
+    padding: 40px 40px;
+    align-items: start;
+    border-left: 2px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: default;
+  }
+  .exp-item:hover { border-left-color: var(--accent); background: var(--surface2); }
+  .exp-meta { }
+  .exp-period {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .exp-company {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .exp-platform-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .ptag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 2px;
+  }
+  .exp-content { }
+  .exp-role {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .exp-bullets li {
+    font-size: 0.9rem;
+    color: rgba(240,237,232,0.6);
+    line-height: 1.6;
+    padding-left: 16px;
+    position: relative;
+  }
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+  .exp-highlight {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    padding: 12px 20px;
+    border: 1px solid rgba(232,64,12,0.3);
+    white-space: nowrap;
+    align-self: center;
+  }
+
+  /* PROJECTS */
+  .projects { background: var(--surface); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .project-card {
+    background: var(--bg);
+    padding: 40px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .project-card:hover { background: #0F0F0F; }
+  .project-num {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    color: rgba(232,64,12,0.08);
+    position: absolute;
+    top: 16px; right: 24px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .project-type {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .project-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+  .project-desc {
+    font-size: 0.875rem;
+    color: rgba(240,237,232,0.55);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .project-result {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text);
+    padding: 10px 16px;
+    background: rgba(232,64,12,0.12);
+    border-left: 2px solid var(--accent);
+  }
+
+  /* CONTENT / EMBEDS */
+  .content-section { background: var(--bg); }
+  .content-intro {
+    font-size: 1rem;
+    color: rgba(240,237,232,0.55);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+  .embed-tabs {
+    display: flex; gap: 2px;
+    margin-bottom: 32px;
+  }
+  .tab-btn {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    background: var(--surface);
+    color: var(--muted);
+    border: none;
+    cursor: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .tab-btn.active { background: var(--accent); color: var(--text); }
+  .tab-btn:hover:not(.active) { background: var(--surface2); color: var(--text); }
+  .embed-panel { display: none; }
+  .embed-panel.active { display: block; }
+
+  .embed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+  .embed-placeholder {
+    background: var(--surface);
+    aspect-ratio: 9/16;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    border: 1px dashed var(--border);
+    transition: border-color 0.3s;
+    padding: 32px;
+    text-align: center;
+  }
+  .embed-placeholder:hover { border-color: var(--accent); }
+  .embed-placeholder .ep-icon {
+    font-size: 2rem;
+    opacity: 0.4;
+  }
+  .embed-placeholder .ep-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .embed-placeholder .ep-action {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .embed-input-area {
+    background: var(--surface);
+    padding: 32px;
+    margin-top: 24px;
+    border-left: 2px solid var(--accent);
+  }
+  .embed-input-area p {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+  .embed-input-area code {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent2);
+    background: rgba(232,64,12,0.08);
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+  .ig-embed-container {
+    background: var(--surface);
+    padding: 16px;
+  }
+
+  /* SKILLS */
+  .skills-section { background: var(--surface); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+  .skill-group {
+    background: var(--bg);
+    padding: 36px;
+  }
+  .skill-group-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag {
+    font-size: 0.82rem;
+    color: rgba(240,237,232,0.7);
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    cursor: default;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--text); background: rgba(232,64,12,0.06); }
+
+  /* FOOTER */
+  footer {
+    padding: 64px 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-name {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+  }
+  .footer-name span { color: var(--accent); }
+  .footer-right {
+    text-align: right;
+  }
+  .footer-tagline {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .footer-langs {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: rgba(232,64,12,0.7);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+  .delay-1 { animation-delay: 0.15s; }
+  .delay-2 { animation-delay: 0.3s; }
+  .delay-3 { animation-delay: 0.45s; }
+  .delay-4 { animation-delay: 0.6s; }
+
+  /* scroll reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { padding: 40px 24px; }
+    section { padding: 72px 24px; }
+    .exp-item { grid-template-columns: 1fr; gap: 16px; }
+    .exp-highlight { align-self: start; white-space: normal; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 24px; text-align: center; }
+    .footer-right { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">K<span>.</span>PORTFOLIO</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-number">CM</div>
+  <div class="hero-left">
+    <div class="hero-tag fade-up">Community Manager & Brand Strategist</div>
+    <h1 class="fade-up delay-1">KA<br><span class="outline">RAM</span></h1>
+    <p class="hero-desc fade-up delay-2">
+      Building brands, growing communities, and turning content into results — across Instagram, TikTok, Facebook, and affiliate networks. Based in Morocco, working globally.
+    </p>
+    <div class="hero-badges fade-up delay-3">
+      <span class="badge">Instagram</span>
+      <span class="badge">TikTok</span>
+      <span class="badge">Facebook</span>
+      <span class="badge">Affiliate Marketing</span>
+      <span class="badge">Brand Strategy</span>
+      <span class="badge">Arabic · French · English</span>
+    </div>
+    <div class="cta-row fade-up delay-4">
+      <a href="#projects" class="btn-primary">View My Projects</a>
+      <a href="#experience" class="btn-ghost">See Experience</a>
+    </div>
+  </div>
+  <div class="hero-right fade-up delay-2">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">17K+</div>
+        <div class="stat-label">Instagram followers grown at Carbizzle</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">400K</div>
+        <div class="stat-label">Monthly visitors via Instagram</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3M+</div>
+        <div class="stat-label">Views as affiliate content creator</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">10K+</div>
+        <div class="stat-label">Avg reel reach at Cars For Less</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience reveal" id="experience">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>EXPERIENCE</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-list">
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-period">Current</div>
+        <div class="exp-company">Carbizzle</div>
+        <div class="exp-platform-tags">
+          <span class="ptag">Instagram</span>
+          <span class="ptag">TikTok</span>
+          <span class="ptag">Facebook</span>
+        </div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Social Media Manager & Brand Strategist</div>
+        <ul class="exp-bullets">
+          <li>Led a full company rebrand — new visual identity, tone of voice, and content strategy across all platforms.</li>
+          <li>Grew Instagram audience from 11K to 17K followers in under 2 months through targeted content and community engagement.</li>
+          <li>Drove 400K monthly visitors to the brand's Instagram profile.</li>
+          <li>Designed audience engagement campaigns that significantly increased reach, saves, and profile visits.</li>
+        </ul>
+      </div>
+      <div class="exp-highlight">11K → 17K<br><small style="font-size:0.65rem;font-family:var(--font-mono);color:var(--muted)">in &lt;2 months</small></div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-period">Previous</div>
+        <div class="exp-company">Cars For Less</div>
+        <div class="exp-platform-tags">
+          <span class="ptag">Instagram</span>
+          <span class="ptag">TikTok</span>
+          <span class="ptag">Facebook Ads</span>
+        </div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Community Manager & Content Creator</div>
+        <ul class="exp-bullets">
+          <li>Managed multi-platform social media presence, ensuring consistent brand voice across Instagram, TikTok, and Facebook.</li>
+          <li>Produced Reels that consistently hit 10K+ views through organic strategy — no paid boost.</li>
+          <li>Ran and optimised paid ad campaigns, iterating on creative based on performance data.</li>
+          <li>Built and nurtured an active online community around the brand.</li>
+        </ul>
+      </div>
+      <div class="exp-highlight">10K+<br><small style="font-size:0.65rem;font-family:var(--font-mono);color:var(--muted)">views per reel</small></div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-period">Ongoing</div>
+        <div class="exp-company">Rizz · Kalshi · Polymarket</div>
+        <div class="exp-platform-tags">
+          <span class="ptag">Affiliate</span>
+          <span class="ptag">Content</span>
+          <span class="ptag">Traffic</span>
+        </div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Affiliate Content Creator</div>
+        <ul class="exp-bullets">
+          <li>Created and distributed content across affiliate networks, accumulating 3M+ total views.</li>
+          <li>Optimised traffic funnels through A/B testing of formats, hooks, and calls-to-action.</li>
+          <li>Adapted content tone to niche fintech and prediction market audiences.</li>
+        </ul>
+      </div>
+      <div class="exp-highlight">3M+<br><small style="font-size:0.65rem;font-family:var(--font-mono);color:var(--muted)">total views</small></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects reveal" id="projects">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>PROJECTS</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-num">01</div>
+      <div class="project-type">Brand Strategy</div>
+      <div class="project-title">Carbizzle Rebrand</div>
+      <p class="project-desc">Full brand identity overhaul — new visual language, tone of voice, and content system built from scratch. Repositioned the brand to resonate with a younger, car-enthusiast audience.</p>
+      <div class="project-result">+6K followers · 400K monthly visitors</div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">02</div>
+      <div class="project-type">Content Strategy</div>
+      <div class="project-title">Reels Growth Machine</div>
+      <p class="project-desc">Developed a Reels content system for Cars For Less that delivered consistent 10K+ view counts per video — building significant organic reach for the dealership without paid spend.</p>
+      <div class="project-result">10K+ views · every reel · organic</div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">03</div>
+      <div class="project-type">Affiliate Marketing</div>
+      <div class="project-title">Affiliate Content Scaling</div>
+      <p class="project-desc">Produced high-volume content for Rizz, Kalshi, and Polymarket affiliate programmes. Reached 3M+ cumulative views through format testing, hook optimisation, and funnel iteration.</p>
+      <div class="project-result">3M+ views · multiple networks</div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- SKILLS -->
+<section class="skills-section reveal" id="skills">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>SKILLS</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Platforms</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Instagram</span>
+        <span class="skill-tag">TikTok</span>
+        <span class="skill-tag">Facebook</span>
+        <span class="skill-tag">YouTube Shorts</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Strategy</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Community Management</span>
+        <span class="skill-tag">Brand Strategy</span>
+        <span class="skill-tag">Growth Hacking</span>
+        <span class="skill-tag">Audience Engagement</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Content</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Short-form Video</span>
+        <span class="skill-tag">Reels</span>
+        <span class="skill-tag">Copywriting</span>
+        <span class="skill-tag">A/B Testing</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Performance</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Paid Social Ads</span>
+        <span class="skill-tag">Traffic Optimisation</span>
+        <span class="skill-tag">Analytics</span>
+        <span class="skill-tag">Affiliate Marketing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">KA<span>R</span>AM</div>
+  <div class="footer-right">
+    <div class="footer-tagline">Available for remote opportunities — Morocco-based, globally connected.</div>
+    <div class="footer-langs">AR · FR · EN</div>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+  document.querySelectorAll('a, button, .stat-card, .exp-item, .project-card, .skill-tag').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width = '18px'; cursor.style.height = '18px'; ring.style.width = '54px'; ring.style.height = '54px'; ring.style.borderColor = 'rgba(232,64,12,0.7)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width = '10px'; cursor.style.height = '10px'; ring.style.width = '36px'; ring.style.height = '36px'; ring.style.borderColor = 'rgba(232,64,12,0.4)'; });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Tabs
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.embed-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + tab).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Load Instagram embed script if embeds are present
+  if (document.querySelector('.instagram-media')) {
+    const s = document.createElement('script');
+    s.src = 'https://www.instagram.com/embed.js';
+    s.async = true;
+    document.body.appendChild(s);
+  }
+</script>
+</body>
+</html>
